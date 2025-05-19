@@ -1,11 +1,9 @@
-
-
-const cutElm = document.getElementById("myCanvas");
-
-
-function cut(){
-    
+function fadeCanvas() {
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  requestAnimationFrame(fadeCanvas);
 }
+
 
 window.addEventListener('load', () => {
     resize(); // Resizes the canvas once the window loads
@@ -13,6 +11,7 @@ window.addEventListener('load', () => {
     document.addEventListener('mouseup', stopPainting);
     document.addEventListener('mousemove', sketch);
     window.addEventListener('resize', resize);
+    fadeCanvas();
 });
 
 const canvas = document.querySelector('#canvas');
@@ -56,11 +55,7 @@ function sketch(event){
   ctx.beginPath();
   
   ctx.lineWidth = 5;
- 
-  // Sets the end of the lines drawn
-  // to a round shape.
   ctx.lineCap = 'round';
-  
   ctx.strokeStyle = 'green';
     
   // The cursor to start drawing
