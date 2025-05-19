@@ -1,6 +1,10 @@
 Her skal jeg lage noe som ligner på fruit ninja.
 Jeg bruker canvas for å få til kuttingen og bakgrunn
 
+TOP PRIORITY!!:
+*Få til at man kan tegne på canvasen
+*gjør at man bare tegner i en rett linje
+
 
 TODO high priority!!!:
 *lag en funksjon som setter en score.
