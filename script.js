@@ -1,12 +1,23 @@
+//Tegne linjer som forsvinner
+
+
+const offscreenCanvas = document.createElement('canvas');
+const offscreenCtx = offscreenCanvas.getContext('2d');
+
+
 function fadeCanvas() {
   ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   requestAnimationFrame(fadeCanvas);
 }
 
+backgroundImg.onload = () => {
+  resize();
+  animate();
+};
 
 window.addEventListener('load', () => {
-    resize(); // Resizes the canvas once the window loads
+    resize(); 
     document.addEventListener('mousedown', startPainting);
     document.addEventListener('mouseup', stopPainting);
     document.addEventListener('mousemove', sketch);
@@ -16,32 +27,26 @@ window.addEventListener('load', () => {
 
 const canvas = document.querySelector('#canvas');
  
-// Context for the canvas for 2 dimensional operations
+
 const ctx = canvas.getContext('2d');
-  
-// Resizes the canvas to the available size of the window.
+
+
 function resize(){
   ctx.canvas.width = window.innerWidth;
   ctx.canvas.height = window.innerHeight;
 }
   
-// Stores the initial position of the cursor
 let coord = {x:0 , y:0}; 
  
-// This is the flag that we are going to use to 
-// trigger drawing
+
 let paint = false;
   
-// Updates the coordianates of the cursor when 
-// an event e is triggered to the coordinates where 
-// the said event is triggered.
 function getPosition(event){
   coord.x = event.clientX - canvas.offsetLeft;
   coord.y = event.clientY - canvas.offsetTop;
 }
 
-// The following functions toggle the flag to start
-// and stop drawing
+
 function startPainting(event){
   paint = true;
   getPosition(event);
@@ -50,6 +55,21 @@ function stopPainting(){
   paint = false;
 }
   
+function animate() {
+  // Fade the lines on the offscreen canvas
+  offscreenCtx.fillStyle = 'rgba(0, 0, 0, 0.05)'; // Fading color
+  offscreenCtx.fillRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
+
+  // Draw the background image
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+
+  // Draw the faded lines on top
+  ctx.drawImage(offscreenCanvas, 0, 0);
+
+  requestAnimationFrame(animate);
+}
+
 function sketch(event){
   if (!paint) return;
   ctx.beginPath();
@@ -57,20 +77,13 @@ function sketch(event){
   ctx.lineWidth = 5;
   ctx.lineCap = 'round';
   ctx.strokeStyle = 'green';
-    
-  // The cursor to start drawing
-  // moves to this coordinate
   ctx.moveTo(coord.x, coord.y);
  
-  // The position of the cursor
-  // gets updated as we move the
-  // mouse around.
   getPosition(event);
  
-  // A line is traced from start
-  // coordinate to this coordinate
   ctx.lineTo(coord.x , coord.y);
-  
-  // Draws the line.
+
   ctx.stroke();
 }
+
+//Kuler som kan kastes opp
