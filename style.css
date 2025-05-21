@@ -48,8 +48,8 @@ img {
 }
 
 #cutcolor{
-  stroke: grey;
-  stroke-width: 5;
+  stroke: orangered;
+  stroke-width: 50;
   transition: stroke 0.3s ease;
   stroke-linecap: round;
 }

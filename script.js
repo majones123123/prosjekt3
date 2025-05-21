@@ -41,10 +41,7 @@ function animate() {
 function sketch(event) {
   if (!paint) return;
   ctx.beginPath();
-  ctx.src.cutcolorElm
-  ctx.lineWidth = 5;
-  ctx.lineCap = "round";
-  ctx.strokeStyle = "darkgrey";
+  ctx.strokeStyle.cutcolorElm
   ctx.moveTo(coord.x, coord.y);
 
   getPosition(event);
