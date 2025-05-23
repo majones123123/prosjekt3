@@ -1,7 +1,7 @@
 //Tegne linjer som forsvinner
 const backgroundImg = new Image();
 backgroundImg.src = "bilder/cuttingboard.jpg";
-const cutcolorElm = document.getElementById("cutcolor");
+//const cutcolorElm = document.getElementById("cutcolor");
 
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
@@ -41,13 +41,11 @@ function animate() {
 function sketch(event) {
   if (!paint) return;
   ctx.beginPath();
-  ctx.strokeStyle.cutcolorElm
   ctx.moveTo(coord.x, coord.y);
-
   getPosition(event);
-
+  fadestroke();
+  ctx.canvas.style.cursor = "crosshair";
   ctx.lineTo(coord.x, coord.y);
-
   ctx.stroke();
 }
 
@@ -55,7 +53,12 @@ function fadeCanvas() {
   ctx.fillStyle = "rgba(255, 255, 255, 0.1)"; // Fading color
   ctx.fillRect(0, 0, ctx.width, ctx.height);
 }
-
+function fadestroke() {
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.5)"; // Fading color
+  ctx.lineWidth = 10;
+  ctx.lineCap = "round";
+  
+}
 //Kuler som kan kastes opp
 
 
@@ -63,7 +66,7 @@ function fadeCanvas() {
 function oppdaterAlt() {
   animate();
   fadeCanvas();
-
+  fadestroke();
   requestAnimationFrame(oppdaterAlt);
 }
 
