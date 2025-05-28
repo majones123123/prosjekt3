@@ -1,7 +1,4 @@
-//Tegne linjer som forsvinner
-const backgroundImg = new Image();
-backgroundImg.src = "bilder/cuttingboard.jpg";
-//const cutcolorElm = document.getElementById("cutcolor");
+let score = 0;
 
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
@@ -31,11 +28,7 @@ function stopPainting() {
 }
 
 function animate() {
-  // Draw the background image
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
-  // Draw the faded lines on top
-  ctx.drawImage(ctx, 0, 0);
 }
 
 function sketch(event) {
@@ -43,7 +36,6 @@ function sketch(event) {
   ctx.beginPath();
   ctx.moveTo(coord.x, coord.y);
   getPosition(event);
-  fadestroke();
   ctx.canvas.style.cursor = "crosshair";
   ctx.lineTo(coord.x, coord.y);
   ctx.stroke();
@@ -53,20 +45,11 @@ function fadeCanvas() {
   ctx.fillStyle = "rgba(255, 255, 255, 0.1)"; // Fading color
   ctx.fillRect(0, 0, ctx.width, ctx.height);
 }
-function fadestroke() {
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.5)"; // Fading color
-  ctx.lineWidth = 10;
-  ctx.lineCap = "round";
-  
-}
-//Kuler som kan kastes opp
-
 
 // Hovedløkka vår
 function oppdaterAlt() {
   animate();
-  fadeCanvas();
-  fadestroke();
+  //fadeCanvas();
   requestAnimationFrame(oppdaterAlt);
 }
 
@@ -76,5 +59,24 @@ window.addEventListener("load", () => {
   document.addEventListener("mouseup", stopPainting);
   document.addEventListener("mousemove", sketch);
   window.addEventListener("resize", resize);
-  oppdaterAlt(); // Start the animation loop
+  oppdaterAlt();
+  shootBall();
 });
+
+// Funksjon for å kaste baller
+// Funksjonen oppretter en ball som plasseres tilfeldig på skjermen
+function shootBall() {
+  const ball = document.createElement("div");
+  ball.className = "ball";
+  ball.style.left = `${Math.random() * window.innerWidth}px`;
+  ball.style.top = `${Math.random() * window.innerHeight}px`;
+  document.body.appendChild(ball);
+  setTimeout(() => {
+    ball.remove();
+    return shootBall();
+  }, 3000);
+  ball.onclick = function () {
+    ball.remove();
+    score++;
+  };
+}
