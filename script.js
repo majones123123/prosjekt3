@@ -1,4 +1,6 @@
 let score = 0;
+let time = 3000;
+
 
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
@@ -63,6 +65,8 @@ window.addEventListener("load", () => {
   shootBall();
 });
 
+let timeoutId = null;
+
 // Funksjon for å kaste baller
 // Funksjonen oppretter en ball som plasseres tilfeldig på skjermen
 function shootBall() {
@@ -71,12 +75,18 @@ function shootBall() {
   ball.style.left = `${Math.random() * window.innerWidth}px`;
   ball.style.top = `${Math.random() * window.innerHeight}px`;
   document.body.appendChild(ball);
-  setTimeout(() => {
+  
+  timeoutId = setTimeout(() => {
     ball.remove();
-    return shootBall();
-  }, 3000);
-  ball.onclick = function () {
+    shootBall();
+  }, time);
+  
+  ball.onclick = function ballKlikket() {
     ball.remove();
+    clearTimeout(timeoutId);
     score++;
+    time *= 0.8; // Reduserer tiden for neste ball
+    console.log("Score: " + score, "Timout: " + time);
+    shootBall();
   };
 }
