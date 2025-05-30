@@ -10,11 +10,6 @@ html {
   box-sizing: inherit;
 }
 
-#cut {
-  background-image: url(bilder/cuttingboard.jpg);
-  background-size: cover;
-  background-position: center;
-}
 
 body,
 h1,
@@ -41,6 +36,11 @@ img {
   height: auto;
 }
 
+#cut {
+  background-image: url(bilder/cuttingboard.jpg);
+  background-size: cover;
+  background-position: center;
+}
 #canvas {
   border: none;
 }
@@ -52,4 +52,15 @@ img {
   border-radius: 50%;
   background-color: #ff0000;
   box-shadow: 0 0 10px black;
+}
+
+.info {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5); 
+  top: 10px;
+  left: 90%;
+  padding: 10px;
+  margin-right: 100px;
+  color: white;
+  font-size: 1.2rem;
 }

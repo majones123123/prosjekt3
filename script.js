@@ -39,17 +39,14 @@ function animate() {
 function sketch(event) {
   if (!paint) return;
   ctx.beginPath();
-    ctx.canvas.style.cursor = "crosshair";
+  ctx.canvas.style.cursor = "crosshair";
   ctx.moveTo(coord.x, coord.y);
   getPosition(event);
   ctx.lineTo(coord.x, coord.y);
   ctx.stroke();
 }
 
-function fadeCanvas() {
-  ctx.fillStyle = "rgba(255, 255, 255, 0.1)"; // Fading color
-  ctx.fillRect(0, 0, ctx.width, ctx.height);
-}
+
 
 // Hovedløkka vår
 function oppdaterAlt() {
