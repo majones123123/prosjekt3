@@ -1,17 +1,20 @@
 let score = 0;
 let time = 3000;
+let lives = 3;
+let missed = 0;
+let hit = 0;
 
-
+const width = window.innerWidth - 200;
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 
 function resize() {
-  ctx.canvas.width = window.innerWidth;
+  ctx.canvas.width = width;
   ctx.canvas.height = window.innerHeight;
-  ctx.width = window.innerWidth;
+  ctx.width = width;
   ctx.height = window.innerHeight;
 }
-
+ctx.canvas.style.cursor = "crosshair";
 let coord = { x: 0, y: 0 };
 
 let paint = false;
@@ -36,9 +39,9 @@ function animate() {
 function sketch(event) {
   if (!paint) return;
   ctx.beginPath();
+    ctx.canvas.style.cursor = "crosshair";
   ctx.moveTo(coord.x, coord.y);
   getPosition(event);
-  ctx.canvas.style.cursor = "crosshair";
   ctx.lineTo(coord.x, coord.y);
   ctx.stroke();
 }
@@ -72,21 +75,39 @@ let timeoutId = null;
 function shootBall() {
   const ball = document.createElement("div");
   ball.className = "ball";
-  ball.style.left = `${Math.random() * window.innerWidth}px`;
-  ball.style.top = `${Math.random() * window.innerHeight}px`;
+  ball.style.left = `${Math.random() * width - 50}px`;
+  ball.style.top = `${Math.random() * window.innerHeight - 50}px`;
   document.body.appendChild(ball);
-  
   timeoutId = setTimeout(() => {
     ball.remove();
     shootBall();
+    if (time-time===0) {
+      missed++;
+      console.log("Missed: " + missed);
+      if (missed >= 3) {
+        lives--;
+        missed = 0;
+        console.log("Lives: " + lives);
+        if (lives <= 0) {
+          alert("Game Over! Final Score: " + score);
+          location.reload(); // Restart the game
+        }
+      }
+    }
   }, time);
   
   ball.onclick = function ballKlikket() {
     ball.remove();
     clearTimeout(timeoutId);
     score++;
-    time *= 0.8; // Reduserer tiden for neste ball
+    time *= 0.9; // Reduserer tiden for neste ball
     console.log("Score: " + score, "Timout: " + time);
     shootBall();
+    hit++;
+    if (score % 5 === 0) {
+      lives++;
+      console.log("Lives: " + lives);
+    }
+    missed = 0;
   };
 }

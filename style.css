@@ -42,8 +42,6 @@ img {
 }
 
 #canvas {
-  height: 100vh;
-  width: 100%;
   border: none;
 }
 
@@ -55,4 +53,3 @@ img {
   background-color: #ff0000;
   box-shadow: 0 0 10px black;
 }
-
