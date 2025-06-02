@@ -51,7 +51,6 @@ function sketch(event) {
 // Hovedløkka vår
 function oppdaterAlt() {
   animate();
-  //fadeCanvas();
   requestAnimationFrame(oppdaterAlt);
 }
 
@@ -70,6 +69,10 @@ let timeoutId = null;
 // Funksjon for å kaste baller
 // Funksjonen oppretter en ball som plasseres tilfeldig på skjermen
 function shootBall() {
+  const livesText = document.getElementById("lives");
+  livesText.innerHTML = "Lives: " + lives;
+  const timeText = document.getElementById("time");
+  timeText.innerHTML = "Time: " + time / 1000 + "s";
   const ball = document.createElement("div");
   ball.className = "ball";
   ball.style.left = `${Math.random() * width - 50}px`;
@@ -86,14 +89,15 @@ function shootBall() {
         missed = 0;
         console.log("Lives: " + lives);
         if (lives <= 0) {
-          alert("Game Over! Final Score: " + score);
-          location.reload(); // Restart the game
+          location.reload();
         }
       }
     }
   }, time);
   
   ball.onclick = function ballKlikket() {
+    const scoreText = document.getElementById("score");
+    scoreText.innerHTML = "Score: " + score;
     ball.remove();
     clearTimeout(timeoutId);
     score++;
