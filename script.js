@@ -4,7 +4,10 @@ let lives = 3;
 let missed = 0;
 let hit = 0;
 
-const width = window.innerWidth - 200;
+let width = window.innerWidth - 200;
+if (width < 400) {
+  width = window.innerWidth - 70;
+}
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 
@@ -72,11 +75,11 @@ function shootBall() {
   const livesText = document.getElementById("lives");
   livesText.innerHTML = "Lives: " + lives;
   const timeText = document.getElementById("time");
-  timeText.innerHTML = "Time: " + time / 1000 + "s";
+  timeText.innerHTML = "Time: " + (time / 1000).toFixed(2) + "s";
   const ball = document.createElement("div");
   ball.className = "ball";
-  ball.style.left = `${Math.random() * width - 50}px`;
-  ball.style.top = `${Math.random() * window.innerHeight - 50}px`;
+  ball.style.left = `${Math.random() * (width - 50)}px`;
+  ball.style.top = `${Math.random() * (window.innerHeight - 50)}px`;
   document.body.appendChild(ball);
   timeoutId = setTimeout(() => {
     ball.remove();
