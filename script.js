@@ -3,7 +3,7 @@ let time = 3000;
 let lives = 3;
 let missed = 0;
 let hit = 0;
-
+//const gameOver = document.getElementsByClassName("gameover");
 let width = window.innerWidth - 200;
 if (width < 400) {
   width = window.innerWidth - 70;
@@ -92,6 +92,7 @@ function shootBall() {
         missed = 0;
         console.log("Lives: " + lives);
         if (lives <= 0) {
+          //gameOver[1].style.display = "block";
           location.reload();
         }
       }
