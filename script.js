@@ -3,7 +3,7 @@ let time = 3000;
 let lives = 3;
 let missed = 0;
 let hit = 0;
-//const gameOver = document.getElementsByClassName("gameover");
+const gameOver = document.getElementsByClassName("gameover");
 let width = window.innerWidth - 200;
 if (width < 400) {
   width = window.innerWidth - 70;
@@ -39,6 +39,21 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+function stopGame() {
+  clearTimeout(timeoutId);
+  const gameOver = document.createElement("div");
+  gameOver.className = "gameover";
+  gameOver.innerHTML = `<h1>Game Over</h1>
+                        <p>Score: ${score}</p>
+                        <p>Lives: ${lives}</p>
+                        <p>Missed: ${missed}</p>
+                        <p>Hit: ${hit}</p>`;
+  document.body.appendChild(gameOver);
+  document.removeEventListener("mousedown", startPainting);
+  document.removeEventListener("mouseup", stopPainting);
+  document.removeEventListener("mousemove", sketch);
+}
+
 function sketch(event) {
   if (!paint) return;
   ctx.beginPath();
@@ -48,8 +63,6 @@ function sketch(event) {
   ctx.lineTo(coord.x, coord.y);
   ctx.stroke();
 }
-
-
 
 // Hovedløkka vår
 function oppdaterAlt() {
@@ -71,9 +84,9 @@ let timeoutId = null;
 
 // Funksjon for å kaste baller
 // Funksjonen oppretter en ball som plasseres tilfeldig på skjermen
+
 function shootBall() {
   const livesText = document.getElementById("lives");
-  livesText.innerHTML = "Lives: " + lives;
   const timeText = document.getElementById("time");
   timeText.innerHTML = "Time: " + (time / 1000).toFixed(2) + "s";
   const ball = document.createElement("div");
@@ -84,27 +97,27 @@ function shootBall() {
   timeoutId = setTimeout(() => {
     ball.remove();
     shootBall();
-    if (time-time===0) {
+    if (time - time === 0) {
       missed++;
       console.log("Missed: " + missed);
       if (missed >= 3) {
         lives--;
+        livesText.innerHTML = "Lives: " + lives;
         missed = 0;
         console.log("Lives: " + lives);
         if (lives <= 0) {
-          //gameOver[1].style.display = "block";
-          location.reload();
+          stopGame();
         }
       }
     }
   }, time);
-  
+
   ball.onclick = function ballKlikket() {
     const scoreText = document.getElementById("score");
+    score++;
     scoreText.innerHTML = "Score: " + score;
     ball.remove();
     clearTimeout(timeoutId);
-    score++;
     time *= 0.9; // Reduserer tiden for neste ball
     console.log("Score: " + score, "Timout: " + time);
     shootBall();
@@ -113,6 +126,7 @@ function shootBall() {
       lives++;
       console.log("Lives: " + lives);
     }
+    livesText.innerHTML = "Lives: " + lives;
     missed = 0;
   };
 }
