@@ -107,6 +107,10 @@ function shootBall() {
         console.log("Lives: " + lives);
         if (lives <= 0) {
           stopGame();
+          gameOver[0].style.display = "block";
+          gameOver[0].style.display = "flex";
+          gameOver[0].style.flexDirection = "column";
+          gameOver[0].style.zIndex = "1000";
         }
       }
     }
