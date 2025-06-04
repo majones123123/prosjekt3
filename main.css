@@ -22,8 +22,9 @@ body {
 #title {
     text-align: center;
     font-size: 2rem;
-    color: #333;
+    color: #23b190;
     padding: 15px;
+    font-variant-caps: all-petite-caps;
 }
 .box {
     display: grid;
@@ -49,7 +50,7 @@ body {
     grid-column: 2/3;
     grid-row: 1/4;
     background-color: rgb(102, 195, 65);
-    font-size: 60%;
+    font-size: 1rem;
 }
 #funfact{
     background-color: orange;
@@ -67,6 +68,9 @@ a {
     .box {
         display: flex;
         flex-direction: column;
+    }
+    #box2 {
+        font-size: 60%;
     }
 }
 
