@@ -3,14 +3,16 @@ let time = 3000;
 let lives = 3;
 let missed = 0;
 let hit = 0;
-const gameOver = document.getElementsByClassName("gameover");
+const gameOver = document.querySelector(".gameover");
 let width = window.innerWidth - 200;
 if (width < 400) {
   width = window.innerWidth - 70;
 }
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
-
+let highscore = localStorage.getItem("highscore") || 0;
+const highscoreText = document.getElementById("highscore");
+highscoreText.innerHTML = "Highscore: " + highscore;
 function resize() {
   ctx.canvas.width = width;
   ctx.canvas.height = window.innerHeight;
@@ -52,6 +54,11 @@ function stopGame() {
   document.removeEventListener("mousedown", startPainting);
   document.removeEventListener("mouseup", stopPainting);
   document.removeEventListener("mousemove", sketch);
+  if (score > highscore) {
+    highscore = score;
+    localStorage.setItem("highscore", highscore);
+    highscoreText.innerHTML = "Highscore: " + highscore;
+  }
 }
 
 function sketch(event) {
@@ -107,10 +114,7 @@ function shootBall() {
         console.log("Lives: " + lives);
         if (lives <= 0) {
           stopGame();
-          gameOver[0].style.display = "block";
-          gameOver[0].style.display = "flex";
-          gameOver[0].style.flexDirection = "column";
-          gameOver[0].style.zIndex = "1000";
+          gameOver.style.display = "flex";
         }
       }
     }
